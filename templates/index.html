@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kašnjenje letova</title>
+  <style>
+    body {
+      background: rgb(136, 183, 230);
+      font-family: Arial, sans-serif;
+    }
+
+    .forma {
+      width: 300px;
+      margin: 0 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    h1, h3 {
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+    <h1 style="text-align: center;" >Analiza i predviđanje kašnjenja letova</h1>
+  <div class="forma">
+    <h3>Kada putujete?</h3>
+    <form action="{{ url_for('predict')}}" method="post">
+      <label for="month" colo>Izaberite mjesec:  </label>
+      <select id="month" name="month", placeholder="mjesec", required="required">
+        <option value="1">Januar</option>
+        <option value="2">Februar</option>
+        <option value="3">Mart</option>
+        <option value="4">April</option>
+        <option value="5">Maj</option>
+        <option value="6">Jun</option>
+        <option value="7">Jul</option>
+        <option value="8">Avgust</option>
+        <option value="9">Septembar</option>
+        <option value="10">Oktobar</option>
+        <option value="11">Novembar</option>
+        <option value="12">Decembar</option>
+      </select>
+      <h3>Sa kog aerodroma putujete?</h3>
+      <label for="airport" colo>Izaberite naziv aerodroma:  </label> <br>
+      <select id="airport" name="airport", placeholder="aerodrom", required="required">
+      <option value="0">Alexandria, LA: Alexandria International</option>
+      <option value="1">Burlington, VT: Burlington International</option>
+      <option value="2">Columbia, SC: Columbia Metropolitan</option>
+      <option value="3">Newark, NJ: Newark Liberty International</option>
+      <option value="4">Marquette, MI: Marquette Sawyer Regional</option>
+      <option value="5">Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
+    </select>
+      <h3>Sa kojim avio-prevoznikom putujete?</h3>
+      <label for="carrier">Avio-prevoznik:  </label>
+      <select id="carrier" name="carrier", placeholder="prevoznik", required="required">
+        <option value="0">Endeavor Air Inc.</option>
+        <option value="1">American Airlines Inc.</option>
+        <option value="2">JetBlue Airways</option>
+        <option value="3">Delta Air Lines Inc.</option>
+      </select>
+      <br>
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predvidi kašnjenje leta</button>
+    </form>
+    <br>
+    <br>
+    <h2>{{ prediction_text }}</h2>
+  </div>
+</body>
+</html>
