@@ -5,19 +5,25 @@
   <title>Kašnjenje letova</title>
   <style>
     body {
-      background: rgb(136, 183, 230);
-      font-family: Arial, sans-serif;
+      background-image: url('/static/ppp.jpg'); 
+      background-size: 100% 100%; /* Podesite veličinu slike */
+      background-position: top; /* Postavite poziciju slike */
+      background-repeat: no-repeat; /* Onemogućite ponavljanje slike */
+      font-family: Arial, sans-serif; /* Postavite font za cijelu stranicu */
+      margin: 0; /* Uklonite vanjske margine kako bi slika bila u potpunosti vidljiva */    
     }
 
     .forma {
-      width: 300px;
-      margin: 0 20px;
+      width: 400px; /* Širina forme */
       background: #fff;
       padding: 20px;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       text-align: center;
-      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto; /* Centriranje forme */
     }
 
     h1, h3 {
@@ -56,45 +62,56 @@
       margin-top: 20px;
       color: #333;
     }
+    
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+    }
   </style>
 </head>
 <body>
-    <h1 style="text-align: center;" >Analiza i predviđanje kašnjenja letova</h1>
+  <h1 style="text-align: center;" >Analiza i predviđanje kašnjenja letova</h1>
   <div class="forma">
-    <h3>Kada putujete?</h3>
     <form action="{{ url_for('predict')}}" method="post">
+      <h3>Kada putujete?</h3>
       <label for="month" colo>Izaberite mjesec:  </label>
       <select id="month" name="month", placeholder="mjesec", required="required">
-        <option value="1">Januar</option>
-        <option value="2">Februar</option>
-        <option value="3">Mart</option>
-        <option value="4">April</option>
-        <option value="5">Maj</option>
-        <option value="6">Jun</option>
-        <option value="7">Jul</option>
-        <option value="8">Avgust</option>
-        <option value="9">Septembar</option>
-        <option value="10">Oktobar</option>
-        <option value="11">Novembar</option>
-        <option value="12">Decembar</option>
+        <option value="1" {% if selected_month == '1' %} selected {% endif %}>Januar</option>
+        <option value="2" {% if selected_month == '2' %} selected {% endif %}>Februar</option>
+        <option value="3" {% if selected_month == '3' %} selected {% endif %}>Mart</option>
+        <option value="4" {% if selected_month == '4' %} selected {% endif %}>April</option>
+        <option value="5" {% if selected_month == '5' %} selected {% endif %}>Maj</option>
+        <option value="6" {% if selected_month == '6' %} selected {% endif %}>Jun</option>
+        <option value="7" {% if selected_month == '7' %} selected {% endif %}>Jul</option>
+        <option value="8" {% if selected_month == '8' %} selected {% endif %}>Avgust</option>
+        <option value="9" {% if selected_month == '9' %} selected {% endif %}>Septembar</option>
+        <option value="10" {% if selected_month == '10' %} selected {% endif %}>Oktobar</option>
+        <option value="11" {% if selected_month == '11' %} selected {% endif %}>Novembar</option>
+        <option value="12" {% if selected_month == '12' %} selected {% endif %}>Decembar</option>
       </select>
       <h3>Sa kog aerodroma putujete?</h3>
-      <label for="airport" colo>Izaberite naziv aerodroma:  </label> <br>
-      <select id="airport" name="airport", placeholder="aerodrom", required="required">
-      <option value="0">Alexandria, LA: Alexandria International</option>
-      <option value="1">Burlington, VT: Burlington International</option>
-      <option value="2">Columbia, SC: Columbia Metropolitan</option>
-      <option value="3">Newark, NJ: Newark Liberty International</option>
-      <option value="4">Marquette, MI: Marquette Sawyer Regional</option>
-      <option value="5">Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
+      <label for="airport_label" colo>Izaberite naziv aerodroma:  </label> <br>
+      <select id="airport_label" name="airport_label", placeholder="aerodrom", required="required">
+      <option value="9" {% if selected_airport == '9' %} selected {% endif %}>Alexandria, LA: Alexandria International</option>
+      <option value="52" {% if selected_airport == '52' %} selected {% endif %}>Burlington, VT: Burlington International</option>
+      <option value="80" {% if selected_airport == '80' %} selected {% endif %}>Columbia, SC: Columbia Metropolitan</option>
+      <option value="267" {% if selected_airport == '267' %} selected {% endif %}>Newark, NJ: Newark Liberty International</option>
+      <option value="227" {% if selected_airport == '227' %} selected {% endif %}>Marquette, MI: Marquette Sawyer Regional</option>
+      <option value="46" {% if selected_airport == '46' %} selected {% endif %}>Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
     </select>
       <h3>Sa kojim avio-prevoznikom putujete?</h3>
-      <label for="carrier">Avio-prevoznik:  </label>
-      <select id="carrier" name="carrier", placeholder="prevoznik", required="required">
-        <option value="0">Endeavor Air Inc.</option>
-        <option value="1">American Airlines Inc.</option>
-        <option value="2">JetBlue Airways</option>
-        <option value="3">Delta Air Lines Inc.</option>
+      <label for="carrier_label">Avio-prevoznik:  </label>
+      <select id="carrier_label" name="carrier_label", placeholder="prevoznik", required="required">
+        <option value="1" {% if selected_carrier == '1' %} selected {% endif %}>Alaska Airlines Inc.</option>
+        <option value="2" {% if selected_carrier == '2' %} selected {% endif %}>Allegiant Air</option>
+        <option value="6" {% if selected_carrier == '6' %} selected {% endif %}>Endeavor Air Inc.</option>
+        <option value="3" {% if selected_carrier == '3' %} selected {% endif %}>American Airlines Inc.</option>
+        <option value="10" {% if selected_carrier == '10' %} selected {% endif %}>Frontier Airlines Inc.</option>
+        <option value="11" {% if selected_carrier == '11' %} selected {% endif %}>Hawaiian Airlines Inc.</option>
+        <option value="13" {% if selected_carrier == '13' %} selected {% endif %}>JetBlue Airways</option>
+        <option value="5" {% if selected_carrier == '5' %} selected {% endif %}>Delta Air Lines Inc.</option>
       </select>
       <br>
       <button type="submit" class="btn btn-primary btn-block btn-large">Predvidi kašnjenje leta</button>
@@ -103,5 +120,10 @@
     <br>
     <h2>{{ prediction_text }}</h2>
   </div>
+  <!-- Prikaz slika -->
+  <img src="{{ img1 }}" alt="Grafikon 1">
+  <img src="{{ img2 }}" alt="Grafikon 2">
+  <img src="{{ img3 }}" alt="Grafikon 3">
+
 </body>
 </html>
