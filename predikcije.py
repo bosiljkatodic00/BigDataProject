@@ -5,6 +5,9 @@ from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.svm import SVR
 
 pd.options.mode.chained_assignment = None  # default='warn'
 
@@ -38,7 +41,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 
 # Inicijalizacija modela
-model = LinearRegression()
+model = RandomForestRegressor()
 
 # Treniranje modela
 model.fit(X_train, y_train)
@@ -60,6 +63,7 @@ r2 = r2_score(y_test, y_pred)  # R-kvadrat vrednost
 
 print(f"Srednje kvadratno odstupanje (MSE): {mse}")
 print(f"R-kvadrat vrednost (R2): {r2}")
+
 
 #cuvanje modela
 file = open("model.pkl", 'wb')

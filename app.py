@@ -40,25 +40,25 @@ total_delay_by_month = flight_data.groupby('YearMonth')['arr_delay'].sum().reset
 
 
 # Generisanje grafikona unapred
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(16, 6))
 sns.barplot(x='arr_del15', y='carrier_name', data=avg_delay_by_carrier.sort_values(by='arr_del15', ascending=False))
-plt.xlabel('Prosečni procenat kašnjenja')
+plt.xlabel('Prosječni procenat kašnjenja')
 plt.ylabel('Avio-prevoznik')
-plt.title('Prosečni procenat kašnjenja po avio-prevozniku')
+plt.title('Prosječni procenat kašnjenja po avio-prevozniku')
 img1 = plot_to_html_image(plt)
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(16, 6))
 sns.boxplot(data=delay_factors)
 plt.xlabel('Faktori kašnjenja')
 plt.ylabel('Broj kašnjenja')
 plt.title('Analiza faktora kašnjenja')
 img2 = plot_to_html_image(plt)
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(16, 6))
 sns.lineplot(x='YearMonth', y='arr_delay', data=total_delay_by_month)
-plt.xlabel('Godina-Mesec')
+plt.xlabel('Godina-Mjesec')
 plt.ylabel('Ukupno kašnjenje')
-plt.title('Vremenska analiza ukupnog kašnjenja')
+plt.title('Vremenska analiza ukupnog kašnjenja po mjesecima')
 plt.xticks(rotation=45)
 img3 = plot_to_html_image(plt)
 
@@ -94,9 +94,12 @@ def predict():
 
     # Predviđanje kašnjenja leta
     predicted_delay = model.predict(input_data)
+    
+    rounded_delay = round(predicted_delay[0])
+
 
     # Renderovanje HTML stranice sa predviđenim kašnjenjem
-    return render_template('index.html', prediction_text=f'Predviđeno kašnjenje leta: {predicted_delay[0]} minuta',
+    return render_template('index.html', prediction_text=f'{rounded_delay}',
                         selected_month=session.get('selected_month'),
                        selected_airport=session.get('selected_airport'),
                        selected_carrier=session.get('selected_carrier'), img1=img1, img2=img2, img3=img3)
