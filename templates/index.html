@@ -7,13 +7,25 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
   <style>
     body {
-      background-image: url('/static/ppp.jpg'); 
-      background-size: 100% 100%; /* Podesite veličinu slike */
-      background-position: top; /* Postavite poziciju slike */
+      background-image: url('/static/p.jpg'); 
+      background-size: cover;
+      background-position: center; /* Postavite poziciju slike */
       background-repeat: no-repeat; /* Onemogućite ponavljanje slike */
       font-family: Arial, sans-serif; /* Postavite font za cijelu stranicu */
       margin: 0; /* Uklonite vanjske margine kako bi slika bila u potpunosti vidljiva */    
     }
+
+    .float-container {
+        border: 3px solid #fff;
+        padding: 20px;
+    }
+
+.float-content {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}  
 
     * {
       margin: 0;
@@ -23,11 +35,12 @@
   ul.menu {
       display: inline-block;
       list-style-type: none;
+      margin-top: 0; 
   }
 
   li.menu_list {
-      height: 100px;
-      width: 100px;
+    height: 25vh; /* Primer: 20% visine prozora */
+    width: 100px;
       position: relative;
   }
 
@@ -36,7 +49,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100px;
+      height: 100%;
       width: 100%;
       padding: 30px;
       position: absolute;
@@ -66,147 +79,94 @@
   li.menu_list:hover .front {
       transform: rotateY(90deg);
   }
-
-    .forma {
-      width: 400px; /* Širina forme */
-      background: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0 auto; /* Centriranje forme */
-    }
-
-    .content {
-      flex-grow: 1;
-      padding: 20px;
-    }
+  .dropbtn {
+    background-color: #34465d;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
   
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 100px; 
+    margin-left: 250px; 
 
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #7fb1b5;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #7fb1b5;}
 
-    h3 {
-      color: #340;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-    }
-
-    select {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    h2 {
-      margin-top: 20px;
-      color: #333;
-    }
-    
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 20px auto;
-    }
   </style>
 </head>
 <body>
+  <div style="width: 100%;">
+
+    <div style="width: 30%; float: left;"> 
+
   <ul class="menu">
     <li class="menu_list">
       <h1 style="text-align: left; margin-left: 115px; font-size: 35px; color: #FFF; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">ANALIZA I PREDVIĐANJE KAŠNJENJA LETOVA</h1>
 
         <span class="front fas fa-home"></span>
-        <a href="#" class="side">Početna</a>
+        <a href="/" class="side">Početna</a>
       </li>
     <li class="menu_list">
         <span class="front fas fa-chart-bar"></span>
-        <a href="#" class="side">Performanse Aerodroma</a>
+        <a href="/airportcharts" class="side">Performanse Aerodroma</a>
     </li>
     <li class="menu_list">
         <span class="front fas fa-chart-pie"></span>
-        <a href="#" class="side">Performanse Aviokompanija</a>
+        <a href="/carriercharts" class="side">Performanse Avio-kompanija</a>
     </li>
     <li class="menu_list">
         <span class="front fas fa-clock"></span>
         <span class="front fas fa-plane-departure"></span>
-        <a href="#" class="side">Predikcija kašnjenja</a>
+        <a href="/predictdelay" class="side">Predikcija kašnjenja</a>
     </li>
 </ul>
+</div>
 
-  <div class="forma">
-    <form action="{{ url_for('predict')}}" method="post">
-      <h3>Kada putujete?</h3>
-      <label for="month" colo>Izaberite mjesec:  </label>
-      <select id="month" name="month", placeholder="mjesec", required="required">
-        <option value="1" {% if selected_month == '1' %} selected {% endif %}>Januar</option>
-        <option value="2" {% if selected_month == '2' %} selected {% endif %}>Februar</option>
-        <option value="3" {% if selected_month == '3' %} selected {% endif %}>Mart</option>
-        <option value="4" {% if selected_month == '4' %} selected {% endif %}>April</option>
-        <option value="5" {% if selected_month == '5' %} selected {% endif %}>Maj</option>
-        <option value="6" {% if selected_month == '6' %} selected {% endif %}>Jun</option>
-        <option value="7" {% if selected_month == '7' %} selected {% endif %}>Jul</option>
-        <option value="8" {% if selected_month == '8' %} selected {% endif %}>Avgust</option>
-        <option value="9" {% if selected_month == '9' %} selected {% endif %}>Septembar</option>
-        <option value="10" {% if selected_month == '10' %} selected {% endif %}>Oktobar</option>
-        <option value="11" {% if selected_month == '11' %} selected {% endif %}>Novembar</option>
-        <option value="12" {% if selected_month == '12' %} selected {% endif %}>Decembar</option>
-      </select>
-      <h3>Sa kog aerodroma putujete?</h3>
-      <label for="airport_label" colo>Izaberite naziv aerodroma:  </label> <br>
-      <select id="airport_label" name="airport_label", placeholder="aerodrom", required="required">
-      <option value="9" {% if selected_airport == '9' %} selected {% endif %}>Alexandria, LA: Alexandria International</option>
-      <option value="52" {% if selected_airport == '52' %} selected {% endif %}>Burlington, VT: Burlington International</option>
-      <option value="80" {% if selected_airport == '80' %} selected {% endif %}>Columbia, SC: Columbia Metropolitan</option>
-      <option value="267" {% if selected_airport == '267' %} selected {% endif %}>Newark, NJ: Newark Liberty International</option>
-      <option value="227" {% if selected_airport == '227' %} selected {% endif %}>Marquette, MI: Marquette Sawyer Regional</option>
-      <option value="46" {% if selected_airport == '46' %} selected {% endif %}>Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
-    </select>
-      <h3>Sa kojim avio-prevoznikom putujete?</h3>
-      <label for="carrier_label">Avio-prevoznik:  </label>
-      <select id="carrier_label" name="carrier_label", placeholder="prevoznik", required="required">
-        <option value="1" {% if selected_carrier == '1' %} selected {% endif %}>Alaska Airlines Inc.</option>
-        <option value="2" {% if selected_carrier == '2' %} selected {% endif %}>Allegiant Air</option>
-        <option value="6" {% if selected_carrier == '6' %} selected {% endif %}>Endeavor Air Inc.</option>
-        <option value="3" {% if selected_carrier == '3' %} selected {% endif %}>American Airlines Inc.</option>
-        <option value="10" {% if selected_carrier == '10' %} selected {% endif %}>Frontier Airlines Inc.</option>
-        <option value="11" {% if selected_carrier == '11' %} selected {% endif %}>Hawaiian Airlines Inc.</option>
-        <option value="13" {% if selected_carrier == '13' %} selected {% endif %}>JetBlue Airways</option>
-        <option value="5" {% if selected_carrier == '5' %} selected {% endif %}>Delta Air Lines Inc.</option>
-      </select>
-      <br>
-      <button type="submit" class="btn btn-primary btn-block btn-large">Predvidi kašnjenje leta</button>
-    </form>
-    <br>
-    <br>
-    <h2>Predviđeno kašnjenje leta:</h2>
-    <h4>{{ prediction_text }} minuta</h4>
+<div style="margin-left:10%; top:260px; position: relative;" > 
+
+<h1 style="text-align: center; margin-right: 80px; font-size: 25px; color: #34465d; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">PRATITE PERFORMANSE AERODROMA, AVIO-KOMPANIJA I PREDVIĐAJTE KAŠNJENJA LETOVA UZ POMOĆ ANALIZE PODATAKA</h1>
+
+<br/>
+<br/>
+
+<div class="dropdown">
+  <button class="dropbtn">POKRENI ANALIZU</button>
+  <div class="dropdown-content">
+    <button class="dropbtn" onclick="location.href='/carriercharts'" type="button">PERFORMANSE AVIO-KOMPANIJA</button>
+    <button class="dropbtn" onclick="location.href='/airportcharts'" type="button">PERFORMANSE AERODROMA</button>
+
+    <a href="/carriercharts">PERFORMANSE AVIO-KOMPANIJA</a>
+    <a href="/airportcharts">PERFORMANSE AERODROMA</a>
   </div>
-  <!-- Prikaz slika -->
-  <img src="{{ img1 }}" alt="Grafikon 1">
-  <img src="{{ img2 }}" alt="Grafikon 2">
-  <img src="{{ img3 }}" alt="Grafikon 3">
+</div>
 
+<button class="dropbtn" onclick="location.href='/predictdelay'" type="button">PREDVIĐANJE KAŠNJENJA</button>
+
+</div>
 </body>
 </html>

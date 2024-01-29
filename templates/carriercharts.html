@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kašnjenje letova</title>
+  <script src="https://use.fontawesome.com/3903c9d7fd.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('/static/p.jpg'); 
+      background-size: cover;
+      background-position: center; /* Postavite poziciju slike */
+      background-repeat: no-repeat; /* Onemogućite ponavljanje slike */
+      font-family: Arial, sans-serif; /* Postavite font za cijelu stranicu */
+      margin: 0; /* Uklonite vanjske margine kako bi slika bila u potpunosti vidljiva */    
+    }
+
+    .float-container {
+        border: 3px solid #fff;
+        padding: 20px;
+    }
+
+.float-content {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}  
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+  ul.menu {
+      display: inline-block;
+      list-style-type: none;
+      margin-top: 0; 
+  }
+
+  li.menu_list {
+    height: 25vh; /* Primer: 20% visine prozora */
+    width: 100px;
+      position: relative;
+  }
+
+  li.menu_list .front,
+  a.side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      padding: 30px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all .5s ease-out;
+      cursor: pointer;
+  }
+  li.menu_list .front {
+      background-color: #34465d;
+      color: #7fb1b5;
+      transform-origin: 0 0;
+  }
+  a.side {
+      background-color: #7fb1b5;
+      color: #34465d;
+      transform-origin: 0 0 100px;
+      transform: rotateY(-90deg);
+      font-size: 12px;
+      font-weight: bold;
+  }
+  li.menu_list:hover a.side {
+      transform: rotateY(0deg);
+  }
+  li.menu_list:hover .front {
+      transform: rotateY(90deg);
+  }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+    <div style="width: 100%;">
+
+        <div style="width: 20%; float: left;"> 
+
+    <ul class="menu">
+        <li class="menu_list">
+          <h2 style="text-align: left; margin-left: 115px; font-size: 20px; color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">PERFORMANSE AVIO-KOMPANIJA</h2>
+    
+            <span class="front fas fa-home"></span>
+            <a href="/" class="side">Početna</a>
+          </li>
+        <li class="menu_list">
+            <span class="front fas fa-chart-bar"></span>
+            <a href="/airportcharts" class="side">Performanse Aerodroma</a>
+        </li>
+        <li class="menu_list">
+            <span class="front fas fa-chart-pie"></span>
+            <a href="/carriercharts" class="side">Performanse Avio-kompanija</a>
+        </li>
+        <li class="menu_list">
+            <span class="front fas fa-clock"></span>
+            <span class="front fas fa-plane-departure"></span>
+            <a href="/predictdelay" class="side">Predikcija kašnjenja</a>
+        </li>
+    </ul>
+</div>
+<div style="margin-left:20%;" > 
+
+  <!-- Prikaz slika -->
+  <br/>
+  {% include 'dijagram.html' %}
+<br/>
+{% include 'plot.html' %}
+<br/>
+<img src="{{ img1 }}" alt="Grafikon 1">
+
+  </div>
+</div>
+
+
+</body>
+</html>
