@@ -41,7 +41,7 @@
   }
 
   li.menu_list {
-    height: 25vh; /* Primer: 20% visine prozora */
+    height: 25vh; /* Primer: 25% visine prozora */
     width: 100px;
       position: relative;
   }
@@ -90,9 +90,9 @@
   </style>
 </head>
 <body>
-    <div style="width: 100%;">
+<div style="width: 100%;">
 
-        <div style="width: 20%; float: left;"> 
+      <div style="width: 20%; float: left;"> 
 
     <ul class="menu">
         <li class="menu_list">
@@ -115,16 +115,17 @@
             <a href="/predictdelay" class="side">Predikcija kašnjenja</a>
         </li>
     </ul>
-</div>
-<div style="margin-left:20%;" > 
+    </div>
+  <div style="margin-left:16%;" > 
 
-  <!-- Prikaz slika -->
-  <br/>
-  {% include 'dijagram.html' %}
-<br/>
-{% include 'plot.html' %}
-<br/>
-<img src="{{ img1 }}" alt="Grafikon 1">
+     <!-- Prikaz slika -->
+    <br/>
+    <br/>
+    {% include 'dijagram.html' %}
+    <br/>
+    {% include 'plot.html' %}
+    <br/>
+   <img src="{{ img1 }}" alt="Grafikon 1">
 
   </div>
 </div>

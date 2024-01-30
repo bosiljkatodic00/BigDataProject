@@ -86,12 +86,20 @@
     font-size: 16px;
     border: none;
   }
+
+  .dropbtn2 {
+    background-color: #34465d;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
   
   .dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 100px; 
-    margin-left: 250px; 
+    margin-right: 20px; 
+    margin-left: 200px; 
 
   }
   
@@ -117,6 +125,9 @@
   
   .dropdown:hover .dropbtn {background-color: #7fb1b5;}
 
+  .dropbtn2:hover {background-color: #7fb1b5;}
+
+
   </style>
 </head>
 <body>
@@ -126,7 +137,7 @@
 
   <ul class="menu">
     <li class="menu_list">
-      <h1 style="text-align: left; margin-left: 115px; font-size: 35px; color: #FFF; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">ANALIZA I PREDVIĐANJE KAŠNJENJA LETOVA</h1>
+      <h1 style="text-align: left; margin-left: 115px; font-size: 30px; color: #FFF; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">ANALIZA I PREDVIĐANJE KAŠNJENJA LETOVA</h1>
 
         <span class="front fas fa-home"></span>
         <a href="/" class="side">Početna</a>
@@ -147,25 +158,21 @@
 </ul>
 </div>
 
-<div style="margin-left:10%; top:260px; position: relative;" > 
+<div style="margin-left:10%; top:300px; position: relative;" > 
 
-<h1 style="text-align: center; margin-right: 80px; font-size: 25px; color: #34465d; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">PRATITE PERFORMANSE AERODROMA, AVIO-KOMPANIJA I PREDVIĐAJTE KAŠNJENJA LETOVA UZ POMOĆ ANALIZE PODATAKA</h1>
+<h1 style="text-align: center; margin-right: 200px; font-size: 25px; color: #34465d; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">PRATITE PERFORMANSE AERODROMA, AVIO-KOMPANIJA I PREDVIĐAJTE KAŠNJENJA LETOVA UZ POMOĆ ANALIZE PODATAKA</h1>
 
-<br/>
 <br/>
 
 <div class="dropdown">
   <button class="dropbtn">POKRENI ANALIZU</button>
   <div class="dropdown-content">
-    <button class="dropbtn" onclick="location.href='/carriercharts'" type="button">PERFORMANSE AVIO-KOMPANIJA</button>
-    <button class="dropbtn" onclick="location.href='/airportcharts'" type="button">PERFORMANSE AERODROMA</button>
-
     <a href="/carriercharts">PERFORMANSE AVIO-KOMPANIJA</a>
     <a href="/airportcharts">PERFORMANSE AERODROMA</a>
   </div>
 </div>
 
-<button class="dropbtn" onclick="location.href='/predictdelay'" type="button">PREDVIĐANJE KAŠNJENJA</button>
+<button class="dropbtn2" onclick="location.href='/predictdelay'" type="button">PREDVIĐANJE KAŠNJENJA</button>
 
 </div>
 </body>

@@ -16,7 +16,8 @@
     }
 
     .float-container {
-        border: 3px solid #fff;
+        border: 3px;
+        solid #fff;
         padding: 20px;
     }
 
@@ -113,16 +114,37 @@
             <a href="/predictdelay" class="side">Predikcija kašnjenja</a>
         </li>
     </ul>
-</div>
-<div style="margin-left:37%;" > 
+  </div>
+  <div style="margin-left:37%;" > 
+    <br/>
+    <div style="margin-left: 37%;">
+      <br/>
+      <form action="{{ url_for('rank_airport')}}" method="post">
+        <label for="airport_name" colo>Izaberite naziv aerodroma:  </label> <br>
+        <select id="airport_name" name="airport_name", placeholder="aerodrom", required="required">
+        <option  value="Alexandria, LA: Alexandria International">Alexandria, LA: Alexandria International</option>
+        <option value="Burlington, VT: Burlington International">Burlington, VT: Burlington International</option>
+        <option value="Columbia, SC: Columbia Metropolitan">Columbia, SC: Columbia Metropolitan</option>
+        <option value="Newark, NJ: Newark Liberty International">Newark, NJ: Newark Liberty International</option>
+        <option value="Marquette, MI: Marquette Sawyer Regional">Marquette, MI: Marquette Sawyer Regional</option>
+        <option value="Bristol/Johnson City/Kingsport, TN: Tri Cities">Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
+      </select>
+          <button type="submit">Prikaži informacije</button>
+      </form>
+
+      {% if prosecno_kasnjenje is defined %}
+    <h3>Naziv aerodroma: {{ airport }}</h3>
+    <h3>Prosečno kašnjenje: {{ prosecno_kasnjenje }} minuta</h3>
+{% elif poruka is defined %}
+    <p>{{ poruka }}</p>
+{% endif %}
+  </div>
+  
+  
 
   </div>
 </div>
 
-  <!-- Prikaz slika -->
-  <img src="{{ img4 }}" alt="Grafikon 1">
-  <img src="{{ img2 }}" alt="Grafikon 2">
-  <img src="{{ img3 }}" alt="Grafikon 3">
 
 </body>
 </html>

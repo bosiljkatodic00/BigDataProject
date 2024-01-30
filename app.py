@@ -28,7 +28,7 @@ flight_data = pd.read_csv("Airline_Delay_Cause.csv")
 # Uzimanje podataka samo za kašnjenja
 delayed_flights = flight_data[flight_data['arr_del15'] > 15]
 
-# Računanje prosečnog kašnjenja po prevozniku
+# Računanje prosečnog kašnjenja po kompaniji
 avg_delay_by_carrier = delayed_flights.groupby('carrier_name')['arr_del15'].mean().reset_index()
 
 # Uzimanje podataka samo o faktorima kašnjenja
@@ -49,10 +49,12 @@ avg_delay_by_airport = delayed_flights_airports.groupby('airport_name')['arr_del
 # Grupisanje po avio-kompaniji
 flights_by_carrier = flight_data.groupby('carrier_name')['arr_flights'].sum().reset_index()
 
-fig = px.pie(flights_by_carrier, names='carrier_name', values='arr_flights', title='Broj letova po avio-prevozniku')
+fig = px.pie(flights_by_carrier, names='carrier_name', values='arr_flights', title='Broj letova po avio-kompaniji')
 
 # Postavljanje opcija za prikaz informacija prilikom postavljanja kursora
 fig.update_traces(hoverinfo='label+percent', textinfo='value+percent', textfont_size=12)
+
+airport_names = flight_data['airport_name'].unique() 
 
 
 # Računanje procentualnog udela otkazanih letova
@@ -65,13 +67,13 @@ cancel_percentage_by_carrier = flight_data.groupby('carrier_name')['cancel_perce
 fig = px.pie(cancel_percentage_by_carrier,
              names='carrier_name',
              values='cancel_percentage',
-             title='Procentualni udio otkazanih letova po avio-prevozniku')
+             title='Procentualni udio otkazanih letova po avio-kompaniji')
 
 # Dodavanje stila za okrugle delove
 fig.update_traces(marker=dict(line=dict(color='#FFFFFF', width=2)), selector=dict(type='pie'))
 
 # Prikazivanje grafa
-fig.write_html("plot.html")
+#fig.write_html("plot.html")
 
 plt.figure(figsize=(50, 50))
 sns.barplot(x='arr_del15', y='airport_name', data=avg_delay_by_airport.sort_values(by='arr_del15', ascending=False))
@@ -84,7 +86,7 @@ img4 = plot_to_html_image(plt)
 plt.figure(figsize=(18, 10))
 sns.barplot(x='arr_del15', y='carrier_name', data=avg_delay_by_carrier.sort_values(by='arr_del15', ascending=False))
 plt.xlabel('Prosječni procenat kašnjenja')
-plt.ylabel('Avio-prevoznik')
+plt.ylabel('Avio-kompanija')
 plt.title('Prosječni procenat kašnjenja po avio-kompaniji')
 img1 = plot_to_html_image(plt)
 
@@ -157,6 +159,25 @@ def predict():
                         selected_month=session.get('selected_month'),
                        selected_airport=session.get('selected_airport'),
                        selected_carrier=session.get('selected_carrier'))
+
+
+# Ruta za obrađivanje unosa korisnika i prikaz rezultata
+@app.route('/rank_airport', methods=['GET', 'POST'])
+def rank_airport():
+   
+    airport = request.form['airport_name']
+    
+    aerodrom_podaci = flight_data[flight_data['airport_name'] == airport]
+    poruka='.'
+    if aerodrom_podaci.empty:
+            return render_template('airportcharts.html', poruka='Aerodrom nije pronađen.')
+
+        # Izračunajte redosled i prosečno kašnjenje (ovo je samo primer)
+   # redosled = aerodrom_podaci['arr_delay'].rank(ascending=True)
+    prosecno_kasnjenje = aerodrom_podaci['arr_delay'].mean()
+
+        # Prenesite izračunate podatke na HTML stranicu
+    return render_template('airportcharts.html', airport=airport, prosecno_kasnjenje=prosecno_kasnjenje, poruka=poruka)
 
 
 if __name__ == '__main__':

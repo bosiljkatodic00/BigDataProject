@@ -66,5 +66,5 @@ print(f"R-kvadrat vrednost (R2): {r2}")
 
 
 #cuvanje modela
-file = open("model.pkl", 'wb')
-pickle.dump(model, file)
+#file = open("model.pkl", 'wb')
+#pickle.dump(model, file)
