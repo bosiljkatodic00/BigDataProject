@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Kašnjenje letova</title>
   <script src="https://use.fontawesome.com/3903c9d7fd.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css" rel="stylesheet">
   <style>
     body {
@@ -115,34 +116,63 @@
         </li>
     </ul>
   </div>
-  <div style="margin-left:37%;" > 
-    <br/>
-    <div style="margin-left: 37%;">
-      <br/>
-      <form action="{{ url_for('rank_airport')}}" method="post">
-        <label for="airport_name" colo>Izaberite naziv aerodroma:  </label> <br>
-        <select id="airport_name" name="airport_name", placeholder="aerodrom", required="required">
-        <option  value="Alexandria, LA: Alexandria International">Alexandria, LA: Alexandria International</option>
-        <option value="Burlington, VT: Burlington International">Burlington, VT: Burlington International</option>
-        <option value="Columbia, SC: Columbia Metropolitan">Columbia, SC: Columbia Metropolitan</option>
-        <option value="Newark, NJ: Newark Liberty International">Newark, NJ: Newark Liberty International</option>
-        <option value="Marquette, MI: Marquette Sawyer Regional">Marquette, MI: Marquette Sawyer Regional</option>
-        <option value="Bristol/Johnson City/Kingsport, TN: Tri Cities">Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
-      </select>
-          <button type="submit">Prikaži informacije</button>
-      </form>
+  <br/>
+  <br/>
+  <div style="margin-left: 17%; top:50px; padding: 20px; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px;">
+   <br/>
 
-      {% if prosecno_kasnjenje is defined %}
-    <h3>Naziv aerodroma: {{ airport }}</h3>
-    <h3>Prosečno kašnjenje: {{ prosecno_kasnjenje }} minuta</h3>
+    <h1 style="text-align: left; font-size: 24px; color: #333; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">PERFORMANSE AERODROMA (od avgusta 2013. do avgusta 2023.)</h1>
+
+    <form action="{{ url_for('rank_airport')}}" method="post" style="margin-bottom: 20px;">
+      <br/>
+        <label for="airport_name" style="color: #333;">Izaberite naziv aerodroma:</label><br>
+        <select id="airport_name" name="airport_name" placeholder="aerodrom" required="required">
+          <option value="Alexandria, LA: Alexandria International">Alexandria, LA: Alexandria International</option>
+          <option value="Burlington, VT: Burlington International">Burlington, VT: Burlington International</option>
+          <option value="Columbia, SC: Columbia Metropolitan">Columbia, SC: Columbia Metropolitan</option>
+          <option value="Newark, NJ: Newark Liberty International">Newark, NJ: Newark Liberty International</option>
+          <option value="Marquette, MI: Marquette Sawyer Regional">Marquette, MI: Marquette Sawyer Regional</option>
+          <option value="Bristol/Johnson City/Kingsport, TN: Tri Cities">Bristol/Johnson City/Kingsport, TN: Tri Cities</option>        </select>
+        <button type="submit" style="padding: 8px 16px; background-color: #4CAF50; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Prikaži informacije</button>
+    </form>
+
+    {% if prosecno_kasnjenje is defined %}
+    <div style="margin-top: 20px;">
+      <p style="color: #333; font-size: 20px;"><strong>Naziv aerodroma:</strong> {{ airport }}</p>
+      <p style="color: #333; font-size: 16px;"><strong>Prosječno kašnjenje:</strong> {{ prosecno_kasnjenje }} minuta</p>
+      <p style="color: #333; font-size: 16px;"><strong>Ukupan broj letova:</strong> {{ brojLetova }}</p>
+      <p style="color: #333; font-size: 16px;"><strong>Broj otkazanih letova:</strong> {{ otkazani }}</p>
+      <p style="color: #333; font-size: 16px;"><strong>Udio kašnjenja po faktorima:</strong></p>
+      <div id="chart-container" style="margin-top: 10px;"></div>
+  </div>
+  <script>
+      // JavaScript kod za crtanje kružnog grafikona
+      var factorsData = [
+          { factor: 'Prevoznik', delay: {{ aerodrom_podaci['carrier_delay'].sum() }} },
+          { factor: 'Vremenski uslovi', delay: {{ aerodrom_podaci['weather_delay'].sum() }} },
+          { factor: 'NAS', delay: {{ aerodrom_podaci['nas_delay'].sum() }} },
+          { factor: 'Sigurnost', delay: {{ aerodrom_podaci['security_delay'].sum() }} },
+          { factor: 'Kašnjenje dolaska aviona', delay: {{ aerodrom_podaci['late_aircraft_delay'].sum() }} }
+      ];
+
+      var data = [{
+          values: factorsData.map(item => item.delay),
+          labels: factorsData.map(item => item.factor),
+          type: 'pie'
+      }];
+
+      var layout = {
+          title: 'Udio kašnjenja po faktorima',
+          showlegend: true
+      };
+
+      Plotly.newPlot('chart-container', data, layout);
+  </script>
 {% elif poruka is defined %}
     <p>{{ poruka }}</p>
 {% endif %}
   </div>
   
-  
-
-  </div>
 </div>
 
 

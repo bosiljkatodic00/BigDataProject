@@ -89,7 +89,7 @@
       text-align: center;
       display: flex;
       flex-direction: column;
-      height:500px;
+      height:550px;
       align-items: center;
       position: absolute;
       top: 100px;
@@ -146,6 +146,7 @@
       margin: 20px auto;
     }
   </style>
+  
 </head>
 <body>
     <div style="width: 100%;">
@@ -177,7 +178,7 @@
 <div style="margin-left:37%;" > 
 
   <div class="forma">
-    <form action="{{ url_for('predict')}}" method="post">
+    <form id="myForm" action="{{ url_for('predict')}}" method="post">
       <h3>Kada putujete?</h3>
       <label for="month" colo>Izaberite mjesec:  </label>
       <select id="month" name="month", placeholder="mjesec", required="required">
@@ -194,8 +195,10 @@
         <option value="11" {% if selected_month == '11' %} selected {% endif %}>Novembar</option>
         <option value="12" {% if selected_month == '12' %} selected {% endif %}>Decembar</option>
       </select>
+      <h3>Koji dan u mjesecu?<h3>
+      <input type="number" name="dayOfMonth" id="dayOfMonth" min="1" max="31"> <br>
       <h3>Sa kog aerodroma putujete?</h3>
-      <label for="airport_label" colo>Izaberite naziv aerodroma:  </label> <br>
+      <label for="airport_label" colo>Izaberite naziv aerodroma:  </label>
       <select id="airport_label" name="airport_label", placeholder="aerodrom", required="required">
       <option value="9" {% if selected_airport == '9' %} selected {% endif %}>Alexandria, LA: Alexandria International</option>
       <option value="52" {% if selected_airport == '52' %} selected {% endif %}>Burlington, VT: Burlington International</option>
@@ -205,7 +208,7 @@
       <option value="46" {% if selected_airport == '46' %} selected {% endif %}>Bristol/Johnson City/Kingsport, TN: Tri Cities</option>
     </select>
       <h3>Sa kojom avio-kompanijom putujete?</h3>
-      <label for="carrier_label">Avio-kompanija:  </label>
+      <label for="carrier_label">Izaberite avio-kompaniju:  </label>
       <select id="carrier_label" name="carrier_label", placeholder="prevoznik", required="required">
         <option value="1" {% if selected_carrier == '1' %} selected {% endif %}>Alaska Airlines Inc.</option>
         <option value="2" {% if selected_carrier == '2' %} selected {% endif %}>Allegiant Air</option>
@@ -221,7 +224,8 @@
     </form>
     <br>
     <h2>Predviđeno kašnjenje leta:</h2>
-    <h3>{{ prediction_text }}</h3>
+    <br/>
+    <h3>{{ prediction_text|safe }}</h3>
   </div>
 </div>
 </div>
